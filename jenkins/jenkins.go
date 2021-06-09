@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/bndr/gojenkins"
-	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"net/http"
 	"os"
