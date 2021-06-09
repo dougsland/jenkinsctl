@@ -1,9 +1,6 @@
 Building the jenkinscli
 
 ```
-$ go mod init
-$ go mod tidy
-$ go get github.com/bndr/gojenkins
 $ go build jenkinscli.go
 ```
 
