@@ -222,11 +222,15 @@ func (j *Jenkins) Init() {
 	fmt.Println("===========")
 	fmt.Println(config.Admuser)
 
+	j.Username = config.Admuser
+	j.Server = config.Server
+	j.Token = config.Token
+
 	j.Instance = gojenkins.CreateJenkins(
 		nil,
-		config.Server,
-		config.Admuser,
-		config.Token)
+		j.Server,
+		j.Username,
+		j.Token)
 }
 
 // ServerInfo will show information regarding the server
