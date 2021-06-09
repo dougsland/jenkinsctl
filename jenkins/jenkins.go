@@ -227,6 +227,7 @@ func (j *Jenkins) Init() {
 	j.Username = config.Admuser
 	j.Server = config.Server
 	j.Token = config.Token
+	j.Context = context.Background()
 
 	j.Instance = gojenkins.CreateJenkins(
 		nil,
