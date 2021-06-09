@@ -156,6 +156,8 @@ func (j *Jenkins) ShowNodesOffline() error {
 func (j *Jenkins) ShowViews() error {
 	views, err := j.Instance.GetAll(j.Context, "All")
 	if err != nil {
+		fmt.Println("erro")
+		fmt.Println(err)
 		return err
 	}
 	fmt.Println(views)
