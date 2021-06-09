@@ -224,6 +224,8 @@ func (j *Jenkins) Init() {
 		jenkinsConfig.Username = config.Admuser
 		jenkinsConfig.Token = config.Token
 	*/
+
+	gmt.Println("===========")
 	fmt.Println(config.Admuser)
 
 	j.Instance = gojenkins.CreateJenkins(
