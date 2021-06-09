@@ -162,11 +162,9 @@ func (j *Jenkins) ShowViews() error {
 	}
 	fmt.Println(views)
 	for _, view := range views.Raw.Jobs {
-		fmt.Println("=====================")
 		fmt.Printf("%s\n", view.Name)
 		fmt.Printf("%s\n", view.Url)
 		fmt.Printf("%s\n", view.Color)
-		fmt.Println("=====================")
 	}
 	return nil
 }

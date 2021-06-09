@@ -17,7 +17,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/dougsland/jenkinscli/jenkins"
+	"github.com/dougsland/jenkinsctl/jenkins"
 	"github.com/spf13/cobra"
 	"os"
 )
