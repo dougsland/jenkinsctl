@@ -247,6 +247,7 @@ func serverReachable(url string) error {
 
 }
 
+/*
 func main() {
 
 	// Init config file
@@ -286,7 +287,6 @@ func main() {
 	}
 
 	jenkins.ServerInfo()
-	/*
 		if os.Args[1] == "build" {
 			buildCmd.Parse(os.Args[2:])
 			if *buildQueueShow {
@@ -327,9 +327,8 @@ func main() {
 			fmt.Printf("❌ unknown flag\n")
 			usage()
 			os.Exit(1)
-		}*/
+		}
 }
-
 func usage() {
 	fmt.Printf("usage: %s [OPTION]...\n", os.Args[0])
 
@@ -361,3 +360,4 @@ func usage() {
 	fmt.Printf("\n")
 	fmt.Printf("\t%s plugins --show\n", os.Args[0])
 }
+*/
