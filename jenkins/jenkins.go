@@ -158,9 +158,13 @@ func (j *Jenkins) ShowViews() error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(views)
 	for _, view := range views {
+		fmt.Println("=====================")
+		fmt.Printf("%s\n", view)
 		fmt.Printf("%s\n", view.Raw.Name)
 		fmt.Printf("%s\n", view.Raw.URL)
+		fmt.Println("=====================")
 	}
 	return nil
 }
