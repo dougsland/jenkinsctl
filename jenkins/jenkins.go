@@ -219,11 +219,6 @@ func (j *Jenkins) Init() {
 		os.Exit(1)
 	}
 
-	fmt.Println("===========")
-	fmt.Println(config.Admuser)
-	fmt.Println(config.Server)
-	fmt.Println(config.Token)
-
 	j.Username = config.Admuser
 	j.Server = config.Server
 	j.Token = config.Token
