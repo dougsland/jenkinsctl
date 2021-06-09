@@ -116,8 +116,6 @@ func (j *Jenkins) PluginsShow() {
 // TIP: Meaning of collors:
 // https://github.com/jenkinsci/jenkins/blob/5e9b451a11926e5b42d4a94612ca566de058f494/core/src/main/java/hudson/model/BallColor.java#L56
 func (j *Jenkins) ShowBuildQueue() {
-	fmt.Printf("⏳ Collecting build queue information...\n\n")
-
 	queue, _ := j.Instance.GetQueue(j.Context)
 	totalTasks := 0
 	for i, item := range queue.Raw.Items {
@@ -266,58 +264,6 @@ func serverReachable(url string) error {
 }
 
 /*
-func main() {
-
-	// Check if the Jenkins Server is reachable
-
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	jenkins.ServerInfo()
-		if os.Args[1] == "build" {
-			buildCmd.Parse(os.Args[2:])
-			if *buildQueueShow {
-				jenkins.ShowBuildQueue()
-			} else {
-				fmt.Printf("❌ unknown build flag\n")
-				usage()
-			}
-		} else if os.Args[1] == "connection" {
-			connectionCmd.Parse(os.Args[2:])
-			if *connectionConn {
-			} else {
-				fmt.Printf("❌ unknown connection flag\n")
-				usage()
-			}
-		} else if os.Args[1] == "plugins" {
-			pluginsCmd.Parse(os.Args[2:])
-			if *pluginsShow {
-				jenkins.PluginsShow()
-			} else {
-				fmt.Printf("❌ unknown plugins flag\n")
-				usage()
-			}
-		} else if os.Args[1] == "nodes" {
-			nodesCmd.Parse(os.Args[2:])
-
-			fmt.Printf("⏳ Collecting node(s) information...\n")
-			if *nodesOnline {
-				jenkins.ShowNodesOnline()
-			} else if *nodesOffline {
-				jenkins.ShowNodesOffline()
-			} else {
-				fmt.Printf("❌ unknown node flag\n")
-				usage()
-				os.Exit(1)
-			}
-		} else {
-			fmt.Printf("❌ unknown flag\n")
-			usage()
-			os.Exit(1)
-		}
-}
 func usage() {
 	fmt.Printf("usage: %s [OPTION]...\n", os.Args[0])
 
