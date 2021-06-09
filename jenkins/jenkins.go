@@ -209,12 +209,28 @@ func (j *Jenkins) ShowNodes(showStatus string) error {
 //
 // Returns
 //
-func (j *Jenkins) Init() {
-	j.Instance = gojenkins.CreateJenkins(
+func Init() *Jenkins {
+	// Init config file
+	jenkinsConfig := Config{}
+	jenkinsConfig.SetConfigPath()
+	config, err := jenkinsConfig.LoadConfig()
+	if err != nil {
+		fmt.Printf("cannot load config: %s\n", err)
+		os.Exit(1)
+	}
+
+	jenkinsConfig.Server = config.Server
+	jenkinsConfig.Username = config.Admuser
+	jenkinsConfig.Token = config.Token
+
+	fmt.Println(jenkinsConfig.Username)
+
+	// Creating the object
+	return gojenkins.CreateJenkins(
 		nil,
-		j.Server,
-		j.Username,
-		j.Token)
+		jenkinsConfig.Server,
+		jenkinsConfig.Username,
+		jenkinsConfig.Token)
 }
 
 // ServerInfo will show information regarding the server
@@ -248,29 +264,6 @@ func serverReachable(url string) error {
 
 /*
 func main() {
-
-	// Init config file
-	jenkinsConfig := Config{}
-	jenkinsConfig.SetConfigPath()
-	config, err := jenkinsConfig.LoadConfig()
-	if err != nil {
-		fmt.Printf("cannot load config: %s\n", err)
-		os.Exit(1)
-	}
-
-	jenkinsConfig.Server = config.Server
-	jenkinsConfig.Username = config.Admuser
-	jenkinsConfig.Token = config.Token
-
-	fmt.Println(jenkinsConfig.Username)
-	// Jenkins Connection object
-	jenkins := Jenkins{
-		nil,
-		jenkinsConfig.Server,
-		jenkinsConfig.Username,
-		jenkinsConfig.Token,
-		context.Background(),
-	}
 
 	jenkins.Init()
 	// Check if the Jenkins Server is reachable
