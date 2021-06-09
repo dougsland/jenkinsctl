@@ -225,7 +225,7 @@ func (j *Jenkins) Init() {
 		jenkinsConfig.Token = config.Token
 	*/
 
-	gmt.Println("===========")
+	fmt.Println("===========")
 	fmt.Println(config.Admuser)
 
 	j.Instance = gojenkins.CreateJenkins(
