@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/dougsland/jenkinscli/cmd"
+import "github.com/dougsland/jenkinsctl/cmd"
 
 func main() {
 	cmd.Execute()
