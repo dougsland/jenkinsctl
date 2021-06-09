@@ -19,8 +19,8 @@ type Jenkins struct {
 	Context  context.Context
 }
 
-// JenkinsConfig is focused in the configuration json file
-type JenkinsConfig struct {
+// Config is focused in the configuration json file
+type Config struct {
 	Server         string `mapstructure: Server`
 	Username       string `mapstructure: Username`
 	Admuser        string `mapstructure: Admuser`
@@ -36,7 +36,7 @@ type JenkinsConfig struct {
 //
 // Returns
 //	string or error
-func (j *JenkinsConfig) SetConfigPath() error {
+func (j *Config) SetConfigPath() error {
 	home := os.Getenv("HOME")
 	if len(home) == 0 {
 		return errors.New("cannot get $HOME env var")
@@ -54,7 +54,7 @@ func (j *JenkinsConfig) SetConfigPath() error {
 //
 // Returns
 //	error
-func (j *JenkinsConfig) CheckIfExists() error {
+func (j *Config) CheckIfExists() error {
 	var err error
 	if _, err = os.Stat(j.ConfigFullPath); err == nil {
 		return nil
@@ -74,7 +74,7 @@ func (j *JenkinsConfig) CheckIfExists() error {
 //
 // Returns
 //	nil or error
-func (j *JenkinsConfig) LoadConfig() (config JenkinsConfig, err error) {
+func (j *Config) LoadConfig() (config Config, err error) {
 
 	viper.AddConfigPath(j.ConfigPath)
 	viper.SetConfigName(j.ConfigFileName)
@@ -250,7 +250,7 @@ func serverReachable(url string) error {
 func main() {
 
 	// Init config file
-	jenkinsConfig := JenkinsConfig{}
+	jenkinsConfig := Config{}
 	jenkinsConfig.SetConfigPath()
 	config, err := jenkinsConfig.LoadConfig()
 	if err != nil {
