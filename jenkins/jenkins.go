@@ -154,18 +154,18 @@ func (j *Jenkins) ShowNodesOffline() error {
 
 // ShowViews
 func (j *Jenkins) ShowViews() error {
-	views, err := j.Instance.GetAll(j.Context, "All")
+	views, err := j.Instance.GetView(j.Context, "All")
 	if err != nil {
 		fmt.Println("erro")
 		fmt.Println(err)
 		return err
 	}
 	fmt.Println(views)
-	for _, view := range views {
+	for _, view := range views.Raw.Jobs {
 		fmt.Println("=====================")
-		fmt.Printf("%s\n", view)
-		fmt.Printf("%s\n", view.Raw.Name)
-		fmt.Printf("%s\n", view.Raw.URL)
+		fmt.Printf("%s\n", view.Name)
+		fmt.Printf("%s\n", view.Url)
+		fmt.Printf("%s\n", view.Color)
 		fmt.Println("=====================")
 	}
 	return nil
