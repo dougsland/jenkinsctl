@@ -19,7 +19,7 @@ $ pushd ~/.config/jenkinscli/
     $ vi config.json 
     {
         "Server": "https://jenkins.mydomain.com",
-        "Username": "jenkins-operator",
+        "Admuser": "jenkins-operator",
         "Token": "1152e8e7a88f6c7ef605844b35t5y6i"
 	"WatchIntervalInSec": 5
     }
