@@ -115,7 +115,12 @@ func (j *Jenkins) PluginsShow() {
 //
 // TIP: Meaning of collors:
 // https://github.com/jenkinsci/jenkins/blob/5e9b451a11926e5b42d4a94612ca566de058f494/core/src/main/java/hudson/model/BallColor.java#L56
-func (j *Jenkins) ShowBuildQueue() {
+func (j *Jenkins) ShowBuildQueue() error {
+	err := serverReachable(j.Server)
+	if err != nil {
+		return errors.New("❌ jenkins server unreachable: " + j.Server)
+	}
+
 	queue, _ := j.Instance.GetQueue(j.Context)
 	totalTasks := 0
 	for i, item := range queue.Raw.Items {
@@ -142,18 +147,17 @@ func (j *Jenkins) ShowBuildQueue() {
 		totalTasks = i + 1
 	}
 	fmt.Printf("\nNumber of tasks in the build queue: %d\n", totalTasks)
-}
 
-func (j *Jenkins) ShowNodesOnline() error {
-	return j.ShowNodes("online")
-}
-
-func (j *Jenkins) ShowNodesOffline() error {
-	return j.ShowNodes("offline")
+	return nil
 }
 
 // ShowViews
 func (j *Jenkins) ShowViews() error {
+	err := serverReachable(j.Server)
+	if err != nil {
+		return errors.New("❌ jenkins server unreachable: " + j.Server)
+	}
+
 	views, err := j.Instance.GetView(j.Context, "All")
 	if err != nil {
 		fmt.Println("erro")
@@ -177,6 +181,11 @@ func (j *Jenkins) ShowViews() error {
 // Returns
 //	nil or error
 func (j *Jenkins) ShowNodes(showStatus string) error {
+	err := serverReachable(j.Server)
+	if err != nil {
+		return errors.New("❌ jenkins server unreachable: " + j.Server)
+	}
+
 	nodes, err := j.Instance.GetAllNodes(j.Context)
 	if err != nil {
 		return err
@@ -225,11 +234,6 @@ func (j *Jenkins) Init() error {
 	j.Token = config.Token
 	j.Context = context.Background()
 
-	err = serverReachable(j.Server)
-	if err != nil {
-		return errors.New("❌ jenkins server unreachable: " + j.Server)
-	}
-
 	j.Instance = gojenkins.CreateJenkins(
 		nil,
 		j.Server,
@@ -243,11 +247,18 @@ func (j *Jenkins) Init() error {
 //
 // Args:
 //
-func (j *Jenkins) ServerInfo() {
+func (j *Jenkins) ServerInfo() error {
+	err := serverReachable(j.Server)
+	if err != nil {
+		return errors.New("❌ jenkins server unreachable: " + j.Server)
+	}
+
 	j.Instance.Info(j.Context)
 	fmt.Printf("✅ Connected with: %s\n", j.JenkinsUser)
 	fmt.Printf("✅ Server: %s\n", j.Server)
 	fmt.Printf("✅ Version: %s\n", j.Instance.Version)
+
+	return nil
 }
 
 // serverReachable will do validation if the jenkins server
