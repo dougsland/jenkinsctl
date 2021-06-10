@@ -41,7 +41,7 @@ func (j *Config) SetConfigPath() error {
 	if len(home) == 0 {
 		return errors.New("cannot get $HOME env var")
 	}
-	j.ConfigPath = home + "/.config/" + "jenkinscli/"
+	j.ConfigPath = home + "/.config/" + "jenkinsctl/"
 	j.ConfigFileName = "config.json"
 	j.ConfigFullPath = j.ConfigPath + j.ConfigFileName
 	return nil
@@ -67,7 +67,7 @@ func (j *Config) CheckIfExists() error {
 //
 // Example file:
 //
-// $HOME/.config/jenkinscli/config.json
+// $HOME/.config/jenkinsctl/config.json
 //
 //
 // Args:
