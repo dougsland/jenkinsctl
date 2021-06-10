@@ -130,7 +130,6 @@ func (j *Jenkins) ShowBuildQueue() error {
 
 		j.ShowStatus(item.Task.Color)
 		fmt.Printf("Why: %s\n", item.Why)
-		fmt.Printf("----------------")
 		fmt.Printf("\n")
 		totalTasks = i + 1
 	}
