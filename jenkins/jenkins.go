@@ -129,8 +129,8 @@ func (j *Jenkins) ShowBuildQueue() error {
 		fmt.Printf("Stuck: %v\n", item.Stuck)
 
 		fmt.Printf("Why: %s\n", item.Why)
-		fmt.Printf("\n")
 		fmt.Printf("URL: %s\n", item.Task.URL)
+		fmt.Printf("\n")
 		totalTasks = i + 1
 	}
 	fmt.Printf("\nNumber of tasks in the build queue: %d\n", totalTasks)
@@ -175,7 +175,7 @@ func (j *Jenkins) ShowViews() error {
 	for _, view := range views.Raw.Jobs {
 		fmt.Printf("%s\n", view.Name)
 		fmt.Printf("%s\n", view.Url)
-		j.ShowStatus(view.Color)
+		fmt.Printf("\n")
 	}
 	return nil
 }
