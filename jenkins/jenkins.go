@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 // Jenkins connection object
@@ -21,9 +22,8 @@ type Jenkins struct {
 
 // Config is focused in the configuration json file
 type Config struct {
-	Server      string `mapstructure: Server`
-	JenkinsUser string `mapstructure: JenkinsUser`
-	//	Admuser        string `mapstructure: Admuser`
+	Server         string `mapstructure: Server`
+	JenkinsUser    string `mapstructure: JenkinsUser`
 	Token          string `mapstructure: Token`
 	ConfigPath     string
 	ConfigFileName string
@@ -36,15 +36,11 @@ type Config struct {
 //
 // Returns
 //	string or error
-func (j *Config) SetConfigPath() error {
-	home := os.Getenv("HOME")
-	if len(home) == 0 {
-		return errors.New("❌ cannot get $HOME env var")
-	}
-	j.ConfigPath = home + "/.config/" + "jenkinsctl/"
-	j.ConfigFileName = "config.json"
+func (j *Config) SetConfigPath(path string) {
+	dir, file := filepath.Split(path)
+	j.ConfigPath = dir
+	j.ConfigFileName = file
 	j.ConfigFullPath = j.ConfigPath + j.ConfigFileName
-	return nil
 }
 
 // CheckIfExists check if file exists
@@ -227,15 +223,7 @@ func (j *Jenkins) ShowNodes(showStatus string) error {
 //
 // Returns
 //
-func (j *Jenkins) Init() error {
-	// Init config file
-	jenkinsConfig := Config{}
-	jenkinsConfig.SetConfigPath()
-	config, err := jenkinsConfig.LoadConfig()
-	if err != nil {
-		return errors.New("❌ cannot load config file: " + jenkinsConfig.ConfigFullPath)
-	}
-
+func (j *Jenkins) Init(config Config) {
 	j.JenkinsUser = config.JenkinsUser
 	j.Server = config.Server
 	j.Token = config.Token
@@ -246,8 +234,6 @@ func (j *Jenkins) Init() error {
 		j.Server,
 		j.JenkinsUser,
 		j.Token)
-
-	return nil
 }
 
 // ServerInfo will show information regarding the server
