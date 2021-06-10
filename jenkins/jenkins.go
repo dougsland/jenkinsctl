@@ -122,15 +122,15 @@ func (j *Jenkins) ShowBuildQueue() error {
 	queue, _ := j.Instance.GetQueue(j.Context)
 	totalTasks := 0
 	for i, item := range queue.Raw.Items {
-		fmt.Printf("URL: %s\n", item.Task.URL)
-		fmt.Printf("ID: %d\n", item.ID)
 		fmt.Printf("Name: %s\n", item.Task.Name)
+		fmt.Printf("ID: %d\n", item.ID)
+		j.ShowStatus(item.Task.Color)
 		fmt.Printf("Pending: %v\n", item.Pending)
 		fmt.Printf("Stuck: %v\n", item.Stuck)
 
-		j.ShowStatus(item.Task.Color)
 		fmt.Printf("Why: %s\n", item.Why)
 		fmt.Printf("\n")
+		fmt.Printf("URL: %s\n", item.Task.URL)
 		totalTasks = i + 1
 	}
 	fmt.Printf("\nNumber of tasks in the build queue: %d\n", totalTasks)
