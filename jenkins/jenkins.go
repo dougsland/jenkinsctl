@@ -133,7 +133,7 @@ func (j *Jenkins) ShowBuildQueue() error {
 		fmt.Printf("\n")
 		totalTasks = i + 1
 	}
-	fmt.Printf("\nNumber of tasks in the build queue: %d\n", totalTasks)
+	fmt.Printf("Number of tasks in the build queue: %d\n", totalTasks)
 
 	return nil
 }
