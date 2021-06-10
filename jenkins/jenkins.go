@@ -12,17 +12,17 @@ import (
 
 // Jenkins connection object
 type Jenkins struct {
-	Instance *gojenkins.Jenkins
-	Server   string
-	Username string
-	Token    string
-	Context  context.Context
+	Instance    *gojenkins.Jenkins
+	Server      string
+	JenkinsUser string
+	Token       string
+	Context     context.Context
 }
 
 // Config is focused in the configuration json file
 type Config struct {
-	Server   string `mapstructure: Server`
-	Username string `mapstructure: Username`
+	Server      string `mapstructure: Server`
+	JenkinsUser string `mapstructure: JenkinsUser`
 	//	Admuser        string `mapstructure: Admuser`
 	Token          string `mapstructure: Token`
 	ConfigPath     string
@@ -220,7 +220,7 @@ func (j *Jenkins) Init() error {
 		return errors.New("❌ cannot load config file: " + jenkinsConfig.ConfigFullPath)
 	}
 
-	j.Username = config.Username
+	j.JenkinsUser = config.JenkinsUser
 	j.Server = config.Server
 	j.Token = config.Token
 	j.Context = context.Background()
@@ -233,7 +233,7 @@ func (j *Jenkins) Init() error {
 	j.Instance = gojenkins.CreateJenkins(
 		nil,
 		j.Server,
-		j.Username,
+		j.JenkinsUser,
 		j.Token)
 
 	return nil
@@ -245,7 +245,7 @@ func (j *Jenkins) Init() error {
 //
 func (j *Jenkins) ServerInfo() {
 	j.Instance.Info(j.Context)
-	fmt.Printf("✅ Connected with: %s\n", j.Username)
+	fmt.Printf("✅ Connected with: %s\n", j.JenkinsUser)
 	fmt.Printf("✅ Server: %s\n", j.Server)
 	fmt.Printf("✅ Version: %s\n", j.Instance.Version)
 }

@@ -28,7 +28,7 @@ var getCmd = &cobra.Command{
 	Short: "Display informations about Jenkins",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
-			return errors.New("requires at least one argument")
+			return errors.New("❌ requires at least one argument")
 		}
 		return nil
 	},
