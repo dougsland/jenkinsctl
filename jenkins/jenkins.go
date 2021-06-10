@@ -277,37 +277,3 @@ func serverReachable(url string) error {
 	return nil
 
 }
-
-/*
-func usage() {
-	fmt.Printf("usage: %s [OPTION]...\n", os.Args[0])
-
-	fmt.Printf("OPTIONS:\n")
-	fmt.Printf("\tconnection\t\tConnection Information\n")
-	fmt.Printf("\t\t --show\t\tShow connection info\n")
-
-	fmt.Printf("\n\tbuild	\t\tBuild Information\n")
-	fmt.Printf("\t\t --queue\tShow the current build queue\n")
-
-	fmt.Printf("\n\tnodes	\t\tJenkins Nodes\n")
-	fmt.Printf("\t\t --online\tShow online nodes\n")
-	fmt.Printf("\t\t --offline\tShow offline nodes\n")
-
-	fmt.Printf("\n\tplugins	\t\tPlugins Information\n")
-	fmt.Printf("\t\t --show\t\tShow plugins activated and enabled\n")
-
-	fmt.Printf("\n\nExamples:\n")
-
-	fmt.Printf("\t%s connection --show\n", os.Args[0])
-	fmt.Printf("\n")
-
-	fmt.Printf("\t%s build --queue\n", os.Args[0])
-	fmt.Printf("\n")
-
-	fmt.Printf("\t%s nodes --online\n", os.Args[0])
-	fmt.Printf("\t%s nodes --offline\n", os.Args[0])
-
-	fmt.Printf("\n")
-	fmt.Printf("\t%s plugins --show\n", os.Args[0])
-}
-*/

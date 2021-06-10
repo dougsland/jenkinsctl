@@ -18,6 +18,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -38,9 +39,12 @@ var getCmd = &cobra.Command{
 var connectionInfo = &cobra.Command{
 	Use:   "connection",
 	Short: "get connection info",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		j.ServerInfo()
-		return nil
+	Run: func(cmd *cobra.Command, args []string) {
+		err := j.ServerInfo()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 
@@ -57,9 +61,12 @@ var pluginsInfo = &cobra.Command{
 var viewsInfo = &cobra.Command{
 	Use:   "views",
 	Short: "get all views",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		j.ShowViews()
-		return nil
+	Run: func(cmd *cobra.Command, args []string) {
+		err := j.ShowViews()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 
@@ -72,10 +79,13 @@ var build = &cobra.Command{
 var buildQueue = &cobra.Command{
 	Use:   "queue",
 	Short: "get build queue",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Collecting build queue information...\n")
-		j.ShowBuildQueue()
-		return nil
+		err := j.ShowBuildQueue()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 
@@ -88,20 +98,26 @@ var nodes = &cobra.Command{
 var nodesOffline = &cobra.Command{
 	Use:   "offline",
 	Short: "get nodes offline",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Collecting node(s) information...\n")
-		j.ShowNodes("offline")
-		return nil
+		err := j.ShowNodes("offline")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 
 var nodesOnline = &cobra.Command{
 	Use:   "online",
 	Short: "get nodes online",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Collecting node(s) information...\n")
-		j.ShowNodes("online")
-		return nil
+		err := j.ShowNodes("online")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	},
 }
 
