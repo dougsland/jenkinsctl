@@ -130,17 +130,7 @@ func (j *Jenkins) ShowBuildQueue() error {
 		fmt.Printf("Pending: %v\n", item.Pending)
 		fmt.Printf("Stuck: %v\n", item.Stuck)
 
-		switch item.Task.Color {
-		case "red":
-			fmt.Printf("Status: ❌ Failed\n")
-			break
-		case "red_anime":
-			fmt.Printf("Status: ⏳ In Progress\n")
-			break
-		case "notbuilt":
-			fmt.Printf("Status: 🚧 Not Build\n")
-			break
-		}
+		j.ShowStatus(item.Task.Color)
 		fmt.Printf("Why: %s\n", item.Why)
 		fmt.Printf("----------------")
 		fmt.Printf("\n")
@@ -149,6 +139,24 @@ func (j *Jenkins) ShowBuildQueue() error {
 	fmt.Printf("\nNumber of tasks in the build queue: %d\n", totalTasks)
 
 	return nil
+}
+
+// ShowStatus
+func (j *Jenkins) ShowStatus(object string) {
+
+	switch object {
+	case "red":
+		fmt.Printf("Status: ❌ Failed\n")
+		break
+	case "red_anime":
+		fmt.Printf("Status: ⏳ In Progress\n")
+		break
+	case "notbuilt":
+		fmt.Printf("Status: 🚧 Not Build\n")
+		break
+	default:
+		fmt.Printf("Status: %s\n", object)
+	}
 }
 
 // ShowViews
@@ -168,7 +176,7 @@ func (j *Jenkins) ShowViews() error {
 	for _, view := range views.Raw.Jobs {
 		fmt.Printf("%s\n", view.Name)
 		fmt.Printf("%s\n", view.Url)
-		fmt.Printf("%s\n", view.Color)
+		j.ShowStatus(view.Color)
 	}
 	return nil
 }
