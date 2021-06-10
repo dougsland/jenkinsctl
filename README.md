@@ -15,7 +15,6 @@ $ pushd ~/.config/jenkinsctl/
         "Server": "https://jenkins.mydomain.com",
         "JenkinsUser": "jenkins-operator",
         "Token": "1152e8e7a88f6c7ef605844b35t5y6i"
-	"WatchIntervalInSec": 5
     }
 $ popd
 ```
