@@ -24,7 +24,7 @@ Finally, build the jenkinsctl
 
 ```
 $ git clone https://github.com/dougsland/jenkinsctl.git
-$ cd jenkinsctl.go
+$ cd jenkinsctl
 $ make
 ```
 
