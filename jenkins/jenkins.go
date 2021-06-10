@@ -227,7 +227,7 @@ func (j *Jenkins) Init() error {
 
 	err = serverReachable(j.Server)
 	if err != nil {
-		return errors.New("jenkins server unreachable: %s", j.Server)
+		return errors.New("jenkins server unreachable: " + j.Server)
 	}
 
 	j.Instance = gojenkins.CreateJenkins(
