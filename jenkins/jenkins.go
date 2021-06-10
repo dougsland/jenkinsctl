@@ -21,9 +21,9 @@ type Jenkins struct {
 
 // Config is focused in the configuration json file
 type Config struct {
-	Server         string `mapstructure: Server`
-	Username       string `mapstructure: Username`
-	Admuser        string `mapstructure: Admuser`
+	Server   string `mapstructure: Server`
+	Username string `mapstructure: Username`
+	//	Admuser        string `mapstructure: Admuser`
 	Token          string `mapstructure: Token`
 	ConfigPath     string
 	ConfigFileName string
@@ -39,7 +39,7 @@ type Config struct {
 func (j *Config) SetConfigPath() error {
 	home := os.Getenv("HOME")
 	if len(home) == 0 {
-		return errors.New("cannot get $HOME env var")
+		return errors.New("❌ cannot get $HOME env var")
 	}
 	j.ConfigPath = home + "/.config/" + "jenkinsctl/"
 	j.ConfigFileName = "config.json"
@@ -217,17 +217,17 @@ func (j *Jenkins) Init() error {
 	jenkinsConfig.SetConfigPath()
 	config, err := jenkinsConfig.LoadConfig()
 	if err != nil {
-		return errors.New("cannot load config file: " + jenkinsConfig.ConfigFullPath)
+		return errors.New("❌ cannot load config file: " + jenkinsConfig.ConfigFullPath)
 	}
 
-	j.Username = config.Admuser
+	j.Username = config.Username
 	j.Server = config.Server
 	j.Token = config.Token
 	j.Context = context.Background()
 
 	err = serverReachable(j.Server)
 	if err != nil {
-		return errors.New("jenkins server unreachable: " + j.Server)
+		return errors.New("❌ jenkins server unreachable: " + j.Server)
 	}
 
 	j.Instance = gojenkins.CreateJenkins(

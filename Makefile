@@ -1,10 +1,10 @@
-build: clean-modcache
+build: clean
 	go mod init || true
 	go mod tidy || true
 	go build jenkinsctl.go
 
-clean-modcache:
-	rm -f go.sum go.mod
+clean:
+	rm -f go.sum go.mod jenkinsctl
 	go clean --modcache
 
 all: build
