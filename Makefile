@@ -9,7 +9,7 @@ clean:
 	cd jenkins && rm -f go.mod go.sum
 	go clean --modcache
 
-build:
+build: createmod
 	go build jenkinsctl.go
 
 all: build
