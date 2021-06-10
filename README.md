@@ -1,9 +1,3 @@
-Building the jenkinsctl
-
-```
-$ go build jenkinsctl.go
-```
-
 First step, generate a token for the username that will manage the jenkins.
 
 - Log in to Jenkins.
@@ -25,3 +19,12 @@ $ pushd ~/.config/jenkinsctl/
     }
 $ popd
 ```
+
+Finally, build the jenkinsctl
+
+```
+$ git clone https://github.com/dougsland/jenkinsctl.git
+$ cd jenkinsctl.go
+$ make
+```
+
