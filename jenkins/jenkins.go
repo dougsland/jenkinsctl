@@ -217,7 +217,7 @@ func (j *Jenkins) Init() error {
 	jenkinsConfig.SetConfigPath()
 	config, err := jenkinsConfig.LoadConfig()
 	if err != nil {
-		return errors.New("cannot load config file")
+		return errors.New("cannot load config file: " + jenkinsConfig.ConfigFullPath)
 	}
 
 	j.Username = config.Admuser
