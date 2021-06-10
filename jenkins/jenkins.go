@@ -148,7 +148,7 @@ func (j *Jenkins) ShowStatus(object string) {
 	case "red":
 		fmt.Printf("Status: ❌ Failed\n")
 		break
-	case "red_anime", "blue_anime":
+	case "red_anime", "blue_anime", "yellow_anime", "gray_anime", "notbuild_anime":
 		fmt.Printf("Status: ⏳ In Progress\n")
 		break
 	case "notbuilt":
