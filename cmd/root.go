@@ -24,7 +24,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:     "jenkinscli",
+	Use:     "jenkinsctl",
 	Short:   "A client for jenkins",
 	Version: "v0.0.1",
 	Long:    `Client for jenkins, manage resources by the jenkins`,
