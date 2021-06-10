@@ -1,4 +1,4 @@
-First step, generate a token for the username that will manage the jenkins.
+:one: Generate a token for the username that will manage the jenkins.
 
 - Log in to Jenkins.
 - Click you name (upper-right corner).
@@ -6,7 +6,7 @@ First step, generate a token for the username that will manage the jenkins.
 - Use "Add new Token" button to generate a new one then name it.
 - You must copy the token when you generate it as you cannot view the token afterwards.
 
-Second, create the `configuration directory` and the `config.json file`
+:two: Create the `configuration directory` and the `config.json file`
 ```
 $ mkdir -p ~/.config/jenkinsctl/
 $ pushd ~/.config/jenkinsctl/
@@ -19,7 +19,7 @@ $ pushd ~/.config/jenkinsctl/
 $ popd
 ```
 
-Finally, build the jenkinsctl
+:three: Build the jenkinsctl
 
 ```
 $ git clone https://github.com/dougsland/jenkinsctl.git
