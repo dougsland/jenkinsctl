@@ -113,8 +113,6 @@ func (j *Jenkins) PluginsShow() {
 //
 // Returns
 //
-// TIP: Meaning of collors:
-// https://github.com/jenkinsci/jenkins/blob/5e9b451a11926e5b42d4a94612ca566de058f494/core/src/main/java/hudson/model/BallColor.java#L56
 func (j *Jenkins) ShowBuildQueue() error {
 	err := serverReachable(j.Server)
 	if err != nil {
@@ -142,13 +140,15 @@ func (j *Jenkins) ShowBuildQueue() error {
 }
 
 // ShowStatus
+// TIP: Meaning of collors:
+// https://github.com/jenkinsci/jenkins/blob/5e9b451a11926e5b42d4a94612ca566de058f494/core/src/main/java/hudson/model/BallColor.java#L56
 func (j *Jenkins) ShowStatus(object string) {
 
 	switch object {
 	case "red":
 		fmt.Printf("Status: ❌ Failed\n")
 		break
-	case "red_anime":
+	case "red_anime", "blue_anime":
 		fmt.Printf("Status: ⏳ In Progress\n")
 		break
 	case "notbuilt":
