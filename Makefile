@@ -11,3 +11,6 @@ clean:
 	rm -f go.sum go.mod jenkinsctl
 	cd jenkins && rm -f go.mod go.sum
 	go clean --modcache
+
+build:
+	go build jenkinsctl.go
