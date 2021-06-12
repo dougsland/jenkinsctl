@@ -103,14 +103,14 @@ func (j *Jenkins) PluginsShow() {
 	}
 }
 
-func (j *Jenkins) JobGetConfig() error {
-	job, _ := j.Instance.GetJob(j.Context, "DougTest")
-	isRunning, _ := job.IsRunning(j.Context)
+// JobGetConfig
+func (j *Jenkins) JobGetConfig(jobName string) error {
+	job, err := j.Instance.GetJob(j.Context, jobName)
+	if err != nil {
+		return err
+	}
 	config, _ := job.GetConfig(j.Context)
-	fmt.Println("===========")
-	fmt.Println(isRunning)
 	fmt.Println(config)
-	fmt.Println("===========")
 	return nil
 
 }
