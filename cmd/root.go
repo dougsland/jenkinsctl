@@ -36,7 +36,7 @@ var configFile string
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "", "Path to config file")
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "", "", "Path to config file")
 }
 
 func initConfig() {
