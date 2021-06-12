@@ -89,6 +89,28 @@ var buildQueue = &cobra.Command{
 	},
 }
 
+// JobConfig
+var job = &cobra.Command{
+	Use:   "job",
+	Short: "job related commands",
+}
+
+var jobConfig = &cobra.Command{
+	Use:   "config",
+	Short: "get job config",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			return errors.New("❌ requires at least one argument")
+		}
+		err := jenkinsMod.JobGetConfig(args[0])
+		if err != nil {
+			fmt.Printf("unable to find the job: %s - err: %s \n", args[0], err)
+			os.Exit(1)
+		}
+		return nil
+	},
+}
+
 // Node Command
 var nodes = &cobra.Command{
 	Use:   "nodes",
@@ -170,6 +192,7 @@ func init() {
 	getCmd.AddCommand(viewsInfo)
 	getCmd.AddCommand(nodes)
 	getCmd.AddCommand(build)
+	getCmd.AddCommand(job)
 
 	// nodes
 	nodes.AddCommand(nodesOffline)
@@ -177,4 +200,7 @@ func init() {
 
 	// build
 	build.AddCommand(buildQueue)
+
+	// job
+	job.AddCommand(jobConfig)
 }
