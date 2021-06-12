@@ -13,4 +13,5 @@ clean:
 	go clean --modcache
 
 build:
+	rm -f jenkinsctl
 	go build jenkinsctl.go

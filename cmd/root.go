@@ -30,18 +30,42 @@ var rootCmd = &cobra.Command{
 	Long:    `Client for jenkins, manage resources by the jenkins`,
 }
 
-var j jenkins.Jenkins
+var jenkinsMod jenkins.Jenkins
+var jenkinsConfig jenkins.Config
+var configFile string
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	j = jenkins.Jenkins{}
-	err := j.Init()
+func init() {
+	cobra.OnInitialize(initConfig)
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "", "Path to config file")
+}
+
+func initConfig() {
+	dirname, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
+	if configFile != "" {
+		jenkinsConfig.SetConfigPath(configFile)
+	} else {
+		jenkinsConfig.SetConfigPath(dirname + "/.config/jenkinsctl/config.json")
+	}
+
+	config, err := jenkinsConfig.LoadConfig()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	jenkinsMod = jenkins.Jenkins{}
+	jenkinsMod.Init(config)
+
+}
+
+// Execute adds all child commands to the root command and sets flags appropriately.
+// This is called by main.main(). It only needs to happen once to the rootCmd.
+func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)

@@ -40,7 +40,7 @@ var connectionInfo = &cobra.Command{
 	Use:   "connection",
 	Short: "get connection info",
 	Run: func(cmd *cobra.Command, args []string) {
-		err := j.ServerInfo()
+		err := jenkinsMod.ServerInfo()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -53,7 +53,7 @@ var pluginsInfo = &cobra.Command{
 	Use:   "plugins",
 	Short: "get all plugins active and enabled",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		j.PluginsShow()
+		jenkinsMod.PluginsShow()
 		return nil
 	},
 }
@@ -62,7 +62,7 @@ var viewsInfo = &cobra.Command{
 	Use:   "views",
 	Short: "get all views",
 	Run: func(cmd *cobra.Command, args []string) {
-		err := j.ShowViews()
+		err := jenkinsMod.ShowViews()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -81,7 +81,7 @@ var buildQueue = &cobra.Command{
 	Short: "get build queue",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Collecting build queue information...\n")
-		err := j.ShowBuildQueue()
+		err := jenkinsMod.ShowBuildQueue()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -100,7 +100,7 @@ var nodesOffline = &cobra.Command{
 	Short: "get nodes offline",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Collecting node(s) information...\n")
-		err := j.ShowNodes("offline")
+		err := jenkinsMod.ShowNodes("offline")
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -113,7 +113,7 @@ var nodesOnline = &cobra.Command{
 	Short: "get nodes online",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Collecting node(s) information...\n")
-		err := j.ShowNodes("online")
+		err := jenkinsMod.ShowNodes("online")
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
