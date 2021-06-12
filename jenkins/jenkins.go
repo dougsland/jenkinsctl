@@ -207,16 +207,17 @@ func (j *Jenkins) ShowViews() error {
 //	showStatus - show only the
 //
 // Returns
-//	nil or error
-func (j *Jenkins) ShowNodes(showStatus string) error {
+//	code return, nil or error
+func (j *Jenkins) ShowNodes(showStatus string) ([]string, error) {
+	var hosts []string
 	err := serverReachable(j.Server)
 	if err != nil {
-		return errors.New("❌ jenkins server unreachable: " + j.Server)
+		return hosts, errors.New("❌ jenkins server unreachable: " + j.Server)
 	}
 
 	nodes, err := j.Instance.GetAllNodes(j.Context)
 	if err != nil {
-		return err
+		return hosts, err
 	}
 	for _, node := range nodes {
 		// Fetch Node Data
@@ -229,6 +230,7 @@ func (j *Jenkins) ShowNodes(showStatus string) error {
 				fmt.Printf("❌ %s - offline\n", node.GetName())
 				fmt.Printf("Reason: %s\n\n", node.Raw.OfflineCauseReason)
 			}
+			hosts = append(hosts, node.GetName())
 
 		case "online":
 			if !node.Raw.Offline {
@@ -237,9 +239,10 @@ func (j *Jenkins) ShowNodes(showStatus string) error {
 			if node.Raw.Idle {
 				fmt.Printf("😴 %s - idle\n", node.GetName())
 			}
+			hosts = append(hosts, node.GetName())
 		}
 	}
-	return nil
+	return hosts, nil
 }
 
 // Init will initilialize connection with jenkins server

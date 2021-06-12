@@ -122,9 +122,13 @@ var nodesOffline = &cobra.Command{
 	Short: "get nodes offline",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Collecting node(s) information...\n")
-		err := jenkinsMod.ShowNodes("offline")
+		hosts, err := jenkinsMod.ShowNodes("offline")
 		if err != nil {
 			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		if len(hosts) > 0 {
 			os.Exit(1)
 		}
 	},
@@ -143,48 +147,8 @@ var nodesOnline = &cobra.Command{
 	},
 }
 
-// Var related to flags
-var (
-	connectionInfoBool = false
-	pluginsInfoBool    = false
-	viewsInfoBool      = false
-	nodesBool          = false
-	nodesOfflineBool   = false
-	nodesOnlineBool    = false
-)
-
 func init() {
 	rootCmd.AddCommand(getCmd)
-
-	connectionInfo.Flags().BoolVarP(&connectionInfoBool,
-		"connection",
-		"c",
-		false,
-		"get connection info")
-
-	pluginsInfo.Flags().BoolVarP(&pluginsInfoBool,
-		"plugins",
-		"p",
-		false,
-		"get all plugins actived and enabled")
-
-	viewsInfo.Flags().BoolVarP(&viewsInfoBool,
-		"views",
-		"v",
-		false,
-		"get all views")
-
-	nodes.Flags().BoolVarP(&nodesBool,
-		"nodes",
-		"n",
-		false,
-		"get all nodes")
-
-	nodesOffline.Flags().BoolVarP(&nodesOfflineBool,
-		"offline",
-		"o",
-		false,
-		"get all nodes offline")
 
 	// get
 	getCmd.AddCommand(connectionInfo)
