@@ -103,6 +103,19 @@ func (j *Jenkins) PluginsShow() {
 	}
 }
 
+// DeleteJob
+func (j *Jenkins) DeleteJob(jobName string) error {
+
+	job, err := j.Instance.GetJob(j.Context, jobName)
+	if err != nil {
+		return err
+	}
+
+	_, err = job.Delete(j.Context)
+
+	return err
+}
+
 // JobGetConfig
 func (j *Jenkins) JobGetConfig(jobName string) error {
 	job, err := j.Instance.GetJob(j.Context, jobName)
