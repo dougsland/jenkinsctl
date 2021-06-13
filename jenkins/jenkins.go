@@ -219,8 +219,7 @@ func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
 		return err
 	}
 
-	ctx := context.Background()
-	_, err = j.Instance.CreateJob(ctx, job_data, jobName)
+	_, err = j.Instance.CreateJob(j.Context, job_data, jobName)
 	if err != nil {
 		return err
 	}
