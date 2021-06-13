@@ -216,7 +216,7 @@ func getFileAsString(path string) (string, error) {
 func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
 	err := serverReachable(j.Server)
 	if err != nil {
-		return hosts, errors.New("❌ jenkins server unreachable: " + j.Server)
+		return errors.New("❌ jenkins server unreachable: " + j.Server)
 	}
 	job_data, err := getFileAsString(xmlFile)
 	if err != nil {
