@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/bndr/gojenkins"
 	"github.com/spf13/viper"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -197,6 +198,31 @@ func (j *Jenkins) ShowViews() error {
 		fmt.Printf("✅ %s\n", view.Name)
 		fmt.Printf("%s\n", view.Url)
 		fmt.Printf("\n")
+	}
+	return nil
+}
+
+// getFileAsString
+func getFileAsString(path string) (string, error) {
+	buf, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+
+	return string(buf), nil
+}
+
+// CreateJob
+func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
+	job_data, err := getFileAsString(xmlFile)
+	if err != nil {
+		return err
+	}
+
+	ctx := context.Background()
+	_, err = j.Instance.CreateJob(ctx, job_data, jobName)
+	if err != nil {
+		return err
 	}
 	return nil
 }
