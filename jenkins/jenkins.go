@@ -214,12 +214,12 @@ func getFileAsString(path string) (string, error) {
 
 // CreateJob
 func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
-	fmt.Println(xmlFile)
 	job_data, err := getFileAsString(xmlFile)
 	if err != nil {
 		return err
 	}
 
+	fmt.Println(job_data)
 	_, err = j.Instance.CreateJob(j.Context, job_data, jobName)
 	if err != nil {
 		return err
