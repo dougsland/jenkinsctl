@@ -221,11 +221,7 @@ func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
 
 	fmt.Println(job_data)
 	_, err = j.Instance.CreateJob(j.Context, job_data, jobName)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-	return nil
+	return err
 }
 
 // ShowNodes show all plugins installed and enabled
