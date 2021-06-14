@@ -72,7 +72,6 @@ func (j *Config) CheckIfExists() error {
 // Returns
 //	nil or error
 func (j *Config) LoadConfig() (config Config, err error) {
-
 	viper.AddConfigPath(j.ConfigPath)
 	viper.SetConfigName(j.ConfigFileName)
 	viper.SetConfigType("json")
@@ -106,7 +105,6 @@ func (j *Jenkins) PluginsShow() {
 
 // DeleteJob
 func (j *Jenkins) DeleteJob(jobName string) error {
-
 	job, err := j.Instance.GetJob(j.Context, jobName)
 	if err != nil {
 		return err
@@ -136,11 +134,6 @@ func (j *Jenkins) JobGetConfig(jobName string) error {
 // Returns
 //
 func (j *Jenkins) ShowBuildQueue() error {
-	err := serverReachable(j.Server)
-	if err != nil {
-		return errors.New("❌ jenkins server unreachable: " + j.Server)
-	}
-
 	queue, _ := j.Instance.GetQueue(j.Context)
 	totalTasks := 0
 	for i, item := range queue.Raw.Items {
@@ -164,7 +157,6 @@ func (j *Jenkins) ShowBuildQueue() error {
 // TIP: Meaning of collors:
 // https://github.com/jenkinsci/jenkins/blob/5e9b451a11926e5b42d4a94612ca566de058f494/core/src/main/java/hudson/model/BallColor.java#L56
 func (j *Jenkins) ShowStatus(object string) {
-
 	switch object {
 	case "red":
 		fmt.Printf("Status: ❌ Failed\n")
@@ -182,11 +174,6 @@ func (j *Jenkins) ShowStatus(object string) {
 
 // ShowViews
 func (j *Jenkins) ShowViews() error {
-	err := serverReachable(j.Server)
-	if err != nil {
-		return errors.New("❌ jenkins server unreachable: " + j.Server)
-	}
-
 	views, err := j.Instance.GetView(j.Context, "All")
 	if err != nil {
 		fmt.Println("erro")
@@ -214,10 +201,6 @@ func getFileAsString(path string) (string, error) {
 
 // CreateJob
 func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
-	err := serverReachable(j.Server)
-	if err != nil {
-		return errors.New("❌ jenkins server unreachable: " + j.Server)
-	}
 	job_data, err := getFileAsString(xmlFile)
 	if err != nil {
 		return err
@@ -236,10 +219,6 @@ func (j *Jenkins) CreateJob(xmlFile string, jobName string) error {
 //	code return, nil or error
 func (j *Jenkins) ShowNodes(showStatus string) ([]string, error) {
 	var hosts []string
-	err := serverReachable(j.Server)
-	if err != nil {
-		return hosts, errors.New("❌ jenkins server unreachable: " + j.Server)
-	}
 
 	nodes, err := j.Instance.GetAllNodes(j.Context)
 	if err != nil {
@@ -298,11 +277,6 @@ func (j *Jenkins) Init(config Config) error {
 // Args:
 //
 func (j *Jenkins) ServerInfo() error {
-	err := serverReachable(j.Server)
-	if err != nil {
-		return errors.New("❌ jenkins server unreachable: " + j.Server)
-	}
-
 	j.Instance.Info(j.Context)
 	fmt.Printf("✅ Connected with: %s\n", j.JenkinsUser)
 	fmt.Printf("✅ Server: %s\n", j.Server)

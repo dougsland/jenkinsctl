@@ -61,7 +61,7 @@ func initConfig() {
 	jenkinsMod = jenkins.Jenkins{}
 	err = jenkinsMod.Init(config)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("❌ jenkins server unreachable: " + jenkinsMod.Server)
 		os.Exit(1)
 	}
 
