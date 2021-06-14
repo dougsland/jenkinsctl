@@ -2,7 +2,6 @@ package jenkins
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/bndr/gojenkins"
 	"github.com/spf13/viper"
