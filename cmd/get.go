@@ -26,7 +26,7 @@ import (
 // getCmd represents the show command
 var getCmd = &cobra.Command{
 	Use:   "get",
-	Short: "Display informations about Jenkins",
+	Short: "Get a resource from Jenkins",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
 			return errors.New("❌ requires at least one argument")
