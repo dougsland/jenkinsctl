@@ -277,7 +277,7 @@ func (j *Jenkins) ShowNodes(showStatus string) ([]string, error) {
 //
 // Returns
 //
-func (j *Jenkins) Init(config Config) {
+func (j *Jenkins) Init(config Config) error {
 	j.JenkinsUser = config.JenkinsUser
 	j.Server = config.Server
 	j.Token = config.Token
@@ -288,6 +288,9 @@ func (j *Jenkins) Init(config Config) {
 		j.Server,
 		j.JenkinsUser,
 		j.Token)
+
+	_, err := j.Instance.Init(j.Context)
+	return err
 }
 
 // ServerInfo will show information regarding the server

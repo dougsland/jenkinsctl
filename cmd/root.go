@@ -59,7 +59,11 @@ func initConfig() {
 	}
 
 	jenkinsMod = jenkins.Jenkins{}
-	jenkinsMod.Init(config)
+	err = jenkinsMod.Init(config)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
 }
 
