@@ -179,6 +179,7 @@ func (j *Jenkins) ShowAllJobs() error {
 	}
 	for _, job := range jobs {
 		fmt.Printf("✅ %s\n", job.Raw.Name)
+		j.ShowStatus(job.Raw.Color)
 		fmt.Printf("%s\n", job.Raw.Description)
 		fmt.Printf("%s\n", job.Raw.URL)
 		fmt.Printf("\n")

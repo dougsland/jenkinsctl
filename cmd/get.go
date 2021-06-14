@@ -100,8 +100,11 @@ var jobAll = &cobra.Command{
 	Short: "get all jobs",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Printf("⏳ Collecting all job(s) information...\n")
-		jobs, _ := jenkinsMod.ShowAllJobs()
-		fmt.Println(jobs)
+		err := jenkinsMod.ShowAllJobs()
+		if err != nil {
+			fmt.Printf("unable to find any job: err: %s \n", err)
+			os.Exit(1)
+		}
 		return nil
 	},
 }
