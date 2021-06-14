@@ -175,8 +175,6 @@ func (j *Jenkins) ShowStatus(object string) {
 func (j *Jenkins) ShowAllJobs() error {
 	jobs, err := j.Instance.GetAllJobs(j.Context)
 	if err != nil {
-		fmt.Println("erro")
-		fmt.Println(err)
 		return err
 	}
 	for _, job := range jobs {
@@ -192,11 +190,9 @@ func (j *Jenkins) ShowAllJobs() error {
 func (j *Jenkins) ShowViews() error {
 	views, err := j.Instance.GetView(j.Context, "All")
 	if err != nil {
-		fmt.Println("erro")
-		fmt.Println(err)
 		return err
 	}
-	fmt.Println(views)
+
 	for _, view := range views.Raw.Jobs {
 		fmt.Printf("✅ %s\n", view.Name)
 		fmt.Printf("%s\n", view.Url)
