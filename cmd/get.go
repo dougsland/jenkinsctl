@@ -64,7 +64,7 @@ var viewsInfo = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		err := jenkinsMod.ShowViews()
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("❌ cannot get all views")
 			os.Exit(1)
 		}
 	},
@@ -83,7 +83,7 @@ var buildQueue = &cobra.Command{
 		fmt.Printf("⏳ Collecting build queue information...\n")
 		err := jenkinsMod.ShowBuildQueue()
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("❌ cannot collect build queue")
 			os.Exit(1)
 		}
 	},
@@ -95,12 +95,23 @@ var job = &cobra.Command{
 	Short: "job related commands",
 }
 
+var jobAll = &cobra.Command{
+	Use:   "all",
+	Short: "get all jobs",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Printf("⏳ Collecting all job(s) information...\n")
+		jobs, _ := jenkinsMod.ShowAllJobs()
+		fmt.Println(jobs)
+		return nil
+	},
+}
+
 var jobConfig = &cobra.Command{
 	Use:   "config",
 	Short: "get job config",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
-			return errors.New("❌ requires at least one argument")
+			return errors.New("❌ requires at least one argument [JOB NAME]")
 		}
 		err := jenkinsMod.JobGetConfig(args[0])
 		if err != nil {
@@ -167,4 +178,5 @@ func init() {
 
 	// job
 	job.AddCommand(jobConfig)
+	job.AddCommand(jobAll)
 }

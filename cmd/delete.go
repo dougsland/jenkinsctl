@@ -28,6 +28,15 @@ var deleteCmd = &cobra.Command{
 	Short: "Delete a resource from Jenkins",
 }
 
+var deleteNode = &cobra.Command{
+	Use:   "node",
+	Short: "delete a node",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Println("In the TODO list")
+		return nil
+	},
+}
+
 var deleteJob = &cobra.Command{
 	Use:   "job",
 	Short: "delete a job",
@@ -50,4 +59,5 @@ var deleteJob = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(deleteCmd)
 	deleteCmd.AddCommand(deleteJob)
+	deleteCmd.AddCommand(deleteNode)
 }

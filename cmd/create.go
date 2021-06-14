@@ -36,6 +36,7 @@ var createNode = &cobra.Command{
 		return nil
 	},
 }
+
 var createJob = &cobra.Command{
 	Use:   "job",
 	Short: "create a job",
@@ -58,4 +59,5 @@ var createJob = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(createCmd)
 	createCmd.AddCommand(createJob)
+	createCmd.AddCommand(createNode)
 }

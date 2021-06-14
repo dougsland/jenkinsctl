@@ -171,6 +171,23 @@ func (j *Jenkins) ShowStatus(object string) {
 	}
 }
 
+// ShowJobs
+func (j *Jenkins) ShowAllJobs() error {
+	jobs, err := j.Instance.GetAllJobs(j.Context)
+	if err != nil {
+		fmt.Println("erro")
+		fmt.Println(err)
+		return err
+	}
+	for _, job := range jobs {
+		fmt.Printf("✅ %s\n", job.Raw.Name)
+		fmt.Printf("%s\n", job.Raw.Description)
+		fmt.Printf("%s\n", job.Raw.URL)
+		fmt.Printf("\n")
+	}
+	return nil
+}
+
 // ShowViews
 func (j *Jenkins) ShowViews() error {
 	views, err := j.Instance.GetView(j.Context, "All")
@@ -194,7 +211,6 @@ func getFileAsString(path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	return string(buf), nil
 }
 
