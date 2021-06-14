@@ -157,6 +157,9 @@ func (j *Jenkins) ShowBuildQueue() error {
 // https://github.com/jenkinsci/jenkins/blob/5e9b451a11926e5b42d4a94612ca566de058f494/core/src/main/java/hudson/model/BallColor.java#L56
 func (j *Jenkins) ShowStatus(object string) {
 	switch object {
+	case "blue":
+		fmt.Printf("Status: ✅ Success\n")
+		break
 	case "red":
 		fmt.Printf("Status: ❌ Failed\n")
 		break
