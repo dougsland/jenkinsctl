@@ -170,7 +170,9 @@ func (j *Jenkins) ShowStatus(object string) {
 		fmt.Printf("Status: 🚧 Not Build\n")
 		break
 	default:
-		fmt.Printf("Status: %s\n", object)
+		if len(object) > 0 {
+			fmt.Printf("Status: %s\n", object)
+		}
 	}
 }
 
