@@ -288,4 +288,5 @@ func init() {
 	job.AddCommand(jobLastCompletedBuild)
 	job.AddCommand(jobLastFailedBuild)
 	job.AddCommand(jobLastStableBuild)
+	job.AddCommand(jobLastUnstableBuild)
 }
