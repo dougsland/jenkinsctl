@@ -89,10 +89,82 @@ var buildQueue = &cobra.Command{
 	},
 }
 
-// JobConfig
+// Job Commands
 var job = &cobra.Command{
 	Use:   "job",
 	Short: "job related commands",
+}
+
+/*
+   LastFailedBuild       JobBuild `json:"lastFailedBuild"`
+   LastStableBuild       JobBuild `json:"lastStableBuild"`
+   LastSuccessfulBuild   JobBuild `json:"lastSuccessfulBuild"`
+   LastUnstableBuild     JobBuild `json:"lastUnstableBuild"`
+   LastUnsuccessfulBuild JobBuild `json:"lastUnsuccessfulBuild"`
+*/
+
+var jobLastFailedBuild = &cobra.Command{
+	Use:   "lastfailedbuild",
+	Short: "get last failed build from a job",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			fmt.Println("❌ requires at least one argument [JOB NAME]")
+			os.Exit(1)
+		}
+		err := jenkinsMod.GetLastFailedBuild(args[0])
+		if err != nil {
+			return err
+		}
+		return nil
+	},
+}
+
+var jobLastCompletedBuild = &cobra.Command{
+	Use:   "lastcompletedbuild",
+	Short: "get last successful build from a job",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			fmt.Println("❌ requires at least one argument [JOB NAME]")
+			os.Exit(1)
+		}
+		err := jenkinsMod.GetLastCompletedBuild(args[0])
+		if err != nil {
+			return err
+		}
+		return nil
+	},
+}
+
+var jobGetLastSuccessfulBuild = &cobra.Command{
+	Use:   "lastsuccessfulbuild",
+	Short: "get last successful build from a job",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			fmt.Println("❌ requires at least one argument [JOB NAME]")
+			os.Exit(1)
+		}
+		err := jenkinsMod.GetLastSuccessfulBuild(args[0])
+		if err != nil {
+			return err
+		}
+		return nil
+	},
+}
+
+var jobGetLastBuild = &cobra.Command{
+	Use:   "lastbuild",
+	Short: "get last build from a job",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			fmt.Println("❌ requires at least one argument [JOB NAME]")
+			os.Exit(1)
+		}
+		err := jenkinsMod.GetLastBuild(args[0])
+		if err != nil {
+			return err
+		}
+		return nil
+	},
 }
 
 var jobAll = &cobra.Command{
@@ -102,7 +174,7 @@ var jobAll = &cobra.Command{
 		fmt.Printf("⏳ Collecting all job(s) information...\n")
 		err := jenkinsMod.ShowAllJobs()
 		if err != nil {
-			fmt.Printf("unable to find any job: err: %s \n", err)
+			fmt.Printf("❌ unable to find any job. err: %s \n", err)
 			os.Exit(1)
 		}
 		return nil
@@ -114,18 +186,19 @@ var jobConfig = &cobra.Command{
 	Short: "get job config",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
-			return errors.New("❌ requires at least one argument [JOB NAME]")
+			fmt.Println("❌ requires at least one argument [JOB NAME]")
+			os.Exit(1)
 		}
 		err := jenkinsMod.JobGetConfig(args[0])
 		if err != nil {
-			fmt.Printf("unable to find the job: %s - err: %s \n", args[0], err)
+			fmt.Printf("❌ unable to find the job: %s - err: %s \n", args[0], err)
 			os.Exit(1)
 		}
 		return nil
 	},
 }
 
-// Node Command
+// Node Commands
 var nodes = &cobra.Command{
 	Use:   "nodes",
 	Short: "nodes related commands",
@@ -142,6 +215,7 @@ var nodesOffline = &cobra.Command{
 			os.Exit(1)
 		}
 
+		// We must exit as failure in case we have nodes offline
 		if len(hosts) > 0 {
 			os.Exit(1)
 		}
@@ -155,7 +229,7 @@ var nodesOnline = &cobra.Command{
 		fmt.Printf("⏳ Collecting node(s) information...\n")
 		_, err := jenkinsMod.ShowNodes("online")
 		if err != nil {
-			fmt.Println(err)
+			fmt.Printf("❌ unable to find nodes - err: %s \n", err)
 			os.Exit(1)
 		}
 	},
@@ -182,4 +256,8 @@ func init() {
 	// job
 	job.AddCommand(jobConfig)
 	job.AddCommand(jobAll)
+	job.AddCommand(jobGetLastBuild)
+	job.AddCommand(jobGetLastSuccessfulBuild)
+	job.AddCommand(jobLastCompletedBuild)
+	job.AddCommand(jobLastFailedBuild)
 }

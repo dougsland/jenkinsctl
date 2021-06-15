@@ -28,6 +28,15 @@ var createCmd = &cobra.Command{
 	Short: "Create a resource in Jenkins",
 }
 
+var createView = &cobra.Command{
+	Use:   "node",
+	Short: "create a view",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Println("In the TODO list")
+		return nil
+	},
+}
+
 var createNode = &cobra.Command{
 	Use:   "node",
 	Short: "create a node",
@@ -60,4 +69,5 @@ func init() {
 	rootCmd.AddCommand(createCmd)
 	createCmd.AddCommand(createJob)
 	createCmd.AddCommand(createNode)
+	createCmd.AddCommand(createView)
 }
