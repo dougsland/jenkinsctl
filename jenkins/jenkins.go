@@ -182,7 +182,7 @@ func (j *Jenkins) GetLastCompletedBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
 	job, err := j.Instance.GetJob(j.Context, jobName)
 	if err != nil {
-		return errors.New("❌ unable to find the last completed build job.")
+		return errors.New("❌ unable to find the specific job.")
 	}
 	build, err := job.GetLastCompletedBuild(j.Context)
 	if err != nil {
@@ -199,12 +199,34 @@ func (j *Jenkins) GetLastCompletedBuild(jobName string) error {
 	return nil
 }
 
+// GetLastStableBuild
+func (j *Jenkins) GetLastStableBuild(jobName string) error {
+	fmt.Printf("⏳ Collecting job information...\n")
+	job, err := j.Instance.GetJob(j.Context, jobName)
+	if err != nil {
+		return errors.New("❌ unable to find the specific job.")
+	}
+	build, err := job.GetLastBuild(j.Context)
+	if err != nil {
+		return errors.New("❌ unable to find the last stable build job.")
+	}
+
+	if len(build.Job.Raw.LastBuild.URL) > 0 {
+		fmt.Printf("✅ Last stable build Number: %d\n", build.Job.Raw.LastBuild.Number)
+		fmt.Printf("✅ Last stable build URL: %s\n", build.Job.Raw.LastBuild.URL)
+		fmt.Printf("✅ Parameters: %s\n", build.GetParameters())
+	} else {
+		fmt.Printf("No last build available for job: %s", jobName)
+	}
+	return nil
+}
+
 // GetLastBuild
 func (j *Jenkins) GetLastBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
 	job, err := j.Instance.GetJob(j.Context, jobName)
 	if err != nil {
-		return errors.New("❌ unable to find the last build job.")
+		return errors.New("❌ unable to find the specific job.")
 	}
 	build, err := job.GetLastBuild(j.Context)
 	if err != nil {
