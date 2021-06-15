@@ -96,10 +96,25 @@ var job = &cobra.Command{
 }
 
 /*
-   LastStableBuild       JobBuild `json:"lastStableBuild"`
    LastUnstableBuild     JobBuild `json:"lastUnstableBuild"`
    LastUnsuccessfulBuild JobBuild `json:"lastUnsuccessfulBuild"`
 */
+
+var jobLastUnstableBuild = &cobra.Command{
+	Use:   "lastunstablebuild",
+	Short: "get last unstable build from a job",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) != 1 {
+			fmt.Println("❌ requires at least one argument [JOB NAME]")
+			os.Exit(1)
+		}
+		err := jenkinsMod.GetLastUnstableBuild(args[0])
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	},
+}
 
 var jobLastStableBuild = &cobra.Command{
 	Use:   "laststablebuild",
