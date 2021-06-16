@@ -212,9 +212,12 @@ func (j *Jenkins) DownloadArtifacts(jobName string, buildID int64, pathToSave st
 	artifacts := build.GetArtifacts()
 
 	for _, a := range artifacts {
-		a.SaveToDir(j.Context, pathToSave)
+		fmt.Printf("Saving artifact %s in %s\n", a.FileName, pathToSave)
+		_, err := a.SaveToDir(j.Context, pathToSave)
+		if err != nil {
+			return errors.New("❌ unable to download artifact")
+		}
 	}
-	fmt.Printf("Saved artifacts in %s\n", pathToSave)
 	return nil
 }
 

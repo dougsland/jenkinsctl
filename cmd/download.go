@@ -19,15 +19,13 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
+	"strconv"
 )
 
 // downloadCmd represents the download command
 var downloadCmd = &cobra.Command{
 	Use:   "download",
 	Short: "download related commands",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("download called")
-	},
 }
 
 var artifactsCmd = &cobra.Command{
@@ -40,9 +38,11 @@ var artifactsCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		err := j.DownloadArtifacts(args[0], args[1], args[2])
+		buildID, _ := strconv.ParseInt(args[1], 10, 64)
+
+		err := jenkinsMod.DownloadArtifacts(args[0], buildID, args[2])
 		if err != nil {
-			fmt.Println("cannot download artifacts: %s", err)
+			fmt.Printf("cannot download artifacts: %s\n", err)
 			os.Exit(1)
 		}
 	},
