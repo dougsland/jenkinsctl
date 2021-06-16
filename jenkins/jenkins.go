@@ -212,7 +212,7 @@ func (j *Jenkins) DownloadArtifacts(jobName string, buildID int64, pathToSave st
 	artifacts := build.GetArtifacts()
 
 	if len(artifacts) <= 0 {
-		fmt.Printf("No artifacts available for download")
+		fmt.Printf("No artifacts available for download\n")
 		return nil
 	}
 
