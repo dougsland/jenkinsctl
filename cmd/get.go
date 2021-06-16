@@ -95,11 +95,6 @@ var job = &cobra.Command{
 	Short: "job related commands",
 }
 
-/*
-   LastUnstableBuild     JobBuild `json:"lastUnstableBuild"`
-   LastUnsuccessfulBuild JobBuild `json:"lastUnsuccessfulBuild"`
-*/
-
 var jobLastUnstableBuild = &cobra.Command{
 	Use:   "lastunstablebuild",
 	Short: "get last unstable build from a job",

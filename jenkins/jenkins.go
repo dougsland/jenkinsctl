@@ -199,6 +199,25 @@ func (j *Jenkins) GetLastCompletedBuild(jobName string) error {
 	return nil
 }
 
+// DownloadArtifacts
+func (j *Jenkins) DownloadArtifacts(jobName string, buildID int64, pathToSave string) error {
+	job, err := j.Instance.GetJob(j.Context, jobName)
+	if err != nil {
+		return errors.New("❌ unable to find the job")
+	}
+	build, err := job.GetBuild(j.Context, buildID)
+	if err != nil {
+		return errors.New("❌ unable to find the specific build id")
+	}
+	artifacts := build.GetArtifacts()
+
+	for _, a := range artifacts {
+		a.SaveToDir(j.Context, pathToSave)
+	}
+	fmt.Printf("Saved artifacts in %s\n", pathToSave)
+	return nil
+}
+
 // GetLastStableBuild
 func (j *Jenkins) GetLastUnstableBuild(jobName string) error {
 	fmt.Printf("⏳ Collecting job information...\n")
@@ -228,7 +247,7 @@ func (j *Jenkins) GetLastStableBuild(jobName string) error {
 	if err != nil {
 		return errors.New("❌ unable to find the specific job.")
 	}
-	build, err := job.GetLastBuild(j.Context)
+	build, err := job.GetLastStableBuild(j.Context)
 	if err != nil {
 		return errors.New("❌ unable to find the last stable build job.")
 	}
