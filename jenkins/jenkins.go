@@ -211,10 +211,11 @@ func (j *Jenkins) DownloadArtifacts(jobName string, buildID int64, pathToSave st
 	}
 	artifacts := build.GetArtifacts()
 
-	if len(artifacts) <= 0 {
-		fmt.Printf("No artifacts available for download\n")
-		return nil
-	}
+	fmt.Println(artifacts)
+	//if len(artifacts) <= 0 {
+	//	fmt.Printf("No artifacts available for download\n")
+	//	return nil
+	//}
 
 	for _, a := range artifacts {
 		fmt.Printf("Saving artifact %s in %s\n", a.FileName, pathToSave)
