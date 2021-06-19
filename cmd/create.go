@@ -28,20 +28,30 @@ var createCmd = &cobra.Command{
 	Short: "Create a resource in Jenkins",
 }
 
-var createView = &cobra.Command{
+var createNode = &cobra.Command{
 	Use:   "node",
-	Short: "create a view",
+	Short: "create a node",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("In the TODO list")
 		return nil
 	},
 }
 
-var createNode = &cobra.Command{
-	Use:   "node",
-	Short: "create a node",
+var createView = &cobra.Command{
+	Use:   "view",
+	Short: "create a view",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("In the TODO list")
+		if len(args) != 2 {
+			return errors.New("❌ requires at least two arguments: viewName viewType (LIST_VIEW, NESTED_VIEW, MY_VIEW, DASHBOARD_VIEW, PIPELINE_VIEW")
+		}
+
+		fmt.Printf("⏳ Creating view %s...\n", args[0])
+		err := jenkinsMod.CreateView(args[0], args[1])
+		if err != nil {
+			fmt.Printf("unable to create the view: %s - err: %s \n", args[1], err)
+			os.Exit(1)
+		}
+		fmt.Printf("Created view: %s\n", args[1])
 		return nil
 	},
 }

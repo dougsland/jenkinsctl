@@ -211,7 +211,7 @@ func (j *Jenkins) GetLastCompletedBuild(jobName string) error {
 func (j *Jenkins) CreateView(viewName string, viewType string) error {
 	_, err := j.Instance.CreateView(j.Context, viewName, viewType)
 	if err != nil {
-		return errors.New("❌ unable to view.")
+		return errors.New(err)
 	}
 
 	fmt.Printf("✅ View created: %s\n", viewName)
