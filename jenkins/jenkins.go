@@ -12,6 +12,14 @@ import (
 	"path/filepath"
 )
 
+var (
+	LIST_VIEW      = "hudson.model.ListView"
+	NESTED_VIEW    = "hudson.plugins.nested_view.NestedView"
+	MY_VIEW        = "hudson.model.MyView"
+	DASHBOARD_VIEW = "hudson.plugins.view.dashboard.Dashboard"
+	PIPELINE_VIEW  = "au.com.centrumsystems.hudson.plugin.buildpipeline.BuildPipelineView"
+)
+
 // Jenkins connection object
 type Jenkins struct {
 	Instance    *gojenkins.Jenkins
@@ -196,6 +204,17 @@ func (j *Jenkins) GetLastCompletedBuild(jobName string) error {
 	} else {
 		fmt.Printf("No last completed build available for job: %s", jobName)
 	}
+	return nil
+}
+
+// CreateView
+func (j *Jenkins) CreateView(viewName string, viewType string) error {
+	_, err := j.Instance.CreateView(j.Context, viewName, viewType)
+	if err != nil {
+		return errors.New("❌ unable to view.")
+	}
+
+	fmt.Printf("✅ View created: %s\n", viewName)
 	return nil
 }
 
