@@ -45,8 +45,31 @@ var createView = &cobra.Command{
 			return errors.New("❌ requires at least two arguments: viewName viewType (LIST_VIEW, NESTED_VIEW, MY_VIEW, DASHBOARD_VIEW, PIPELINE_VIEW")
 		}
 
+		viewSelected := ""
+		switch args[1] {
+		case "LIST_VIEW":
+			viewSelected = "hudson.model.ListView"
+			break
+		case "NESTED_VIEW":
+			viewSelected = "hudson.plugins.nested_view.NestedView"
+			break
+		case "MY_VIEW":
+			viewSelected = "hudson.model.MyView"
+			break
+		case "DASHBOARD_VIEW":
+			viewSelected = "hudson.plugins.view.dashboard.Dashboard"
+			break
+		case "PIPELINE_VIEW":
+			viewSelected = "au.com.centrumsystems.hudson.plugin.buildpipeline.BuildPipelineView"
+			break
+		default:
+			viewSelected = ""
+			fmt.Println("views supported: LIST_VIEW, NESTED_VIEW, MY_VIEW, DASHBOARD_VIEW, PIPELINE_VIEW")
+			os.Exit(1)
+		}
+
 		fmt.Printf("⏳ Creating view %s...\n", args[0])
-		err := jenkinsMod.CreateView(args[0], args[1])
+		err := jenkinsMod.CreateView(args[0], viewSelected)
 		if err != nil {
 			fmt.Printf("unable to create the view: %s - err: %s \n", args[1], err)
 			os.Exit(1)
