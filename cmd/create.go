@@ -29,6 +29,22 @@ var createCmd = &cobra.Command{
 	Short: "Create a resource in Jenkins",
 }
 
+var createFolder = &cobra.Command{
+	Use:   "folder",
+	Short: "create a folder",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) != 1 {
+			fmt.Println("❌ requires at one arguments: FOLDER_NAME")
+			os.Exit(1)
+		}
+		_, err := jenkinsMod.Instance.CreateFolder(jenkinsMod.Context, args[0])
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+	},
+}
+
 var createNode = &cobra.Command{
 	Use:   "node",
 	Short: "create a node",
@@ -126,4 +142,5 @@ func init() {
 	createCmd.AddCommand(createJob)
 	createCmd.AddCommand(createNode)
 	createCmd.AddCommand(createView)
+	createCmd.AddCommand(createFolder)
 }
