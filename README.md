@@ -29,4 +29,29 @@ $ cd jenkinsctl
 $ make
 ```
 
+```
+$ ./jenkinsctl
+Client for jenkins, manage resources by the jenkins
+
+Usage:
+  jenkinsctl [command]
+
+Available Commands:
+  create      Create a resource in Jenkins
+  delete      Delete a resource from Jenkins
+  disable     Disable a resource in Jenkins
+  download    download related commands
+  enable      Enable a resource in Jenkins
+  get         Get a resource from Jenkins
+  help        Help about any command
+  plugins     Commands related to plugins
+
+Flags:
+      --config string   Path to config file
+  -h, --help            help for jenkinsctl
+  -v, --version         version for jenkinsctl
+
+Use "jenkinsctl [command] --help" for more information about a command.
+```
+
 :rocket: :rocket: :rocket: :rocket:
