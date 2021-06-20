@@ -382,6 +382,19 @@ func (j *Jenkins) GetLastFailedBuild(jobName string) error {
 	return nil
 }
 
+// AddJobToView will add a specific job to a view
+func (j *Jenkins) AddJobToView(viewName string, jobName string) error {
+
+	view, _ := j.Instance.GetView(j.Context, "test_list_view")
+	_, err := view.AddJob(j.Context, jobName)
+	if err != nil {
+		return errors.New("❌ unable to add job to view")
+	}
+
+	return nil
+
+}
+
 // GetLastSuccessfulBuild will get last failed build
 //
 // Args:
