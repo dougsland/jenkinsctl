@@ -42,6 +42,7 @@ var createFolder = &cobra.Command{
 			fmt.Println(err)
 			os.Exit(1)
 		}
+		fmt.Printf("Created folder %s\n", args[1])
 	},
 }
 
@@ -118,6 +119,31 @@ var createView = &cobra.Command{
 	},
 }
 
+var createJobInFolder = &cobra.Command{
+	Use:   "jobinfolder",
+	Short: "create a job in folder",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) != 3 {
+			fmt.Println("❌ requires at least three arguments: JOB_DATA_XML JOB_NAME FOLDER_NAME")
+		}
+
+		if _, err := os.Stat(args[0]); err != nil {
+			if os.IsNotExist(err) {
+				fmt.Println("cannot find job xml file")
+				os.Exit(1)
+			}
+		}
+
+		fmt.Printf("⏳ Creating the job %s in folder %s...\n", args[1], args[2])
+		_, err := jenkinsMod.Instance.CreateJobInFolder(jenkinsMod.Context, args[0], args[1], args[2])
+		if err != nil {
+			fmt.Printf("unable to create the job: %s - err: %s \n", args[1], err)
+			os.Exit(1)
+		}
+		fmt.Printf("Created job %s in folder: %s\n", args[1], args[2])
+	},
+}
+
 var createJob = &cobra.Command{
 	Use:   "job",
 	Short: "create a job",
@@ -143,4 +169,5 @@ func init() {
 	createCmd.AddCommand(createNode)
 	createCmd.AddCommand(createView)
 	createCmd.AddCommand(createFolder)
+	createCmd.AddCommand(createJobInFolder)
 }
