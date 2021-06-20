@@ -30,6 +30,23 @@ var createCmd = &cobra.Command{
 	Short: "Create a resource in Jenkins",
 }
 
+var createJobInView = &cobra.Command{
+	Use:   "jobinview",
+	Short: "create a job in view",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) != 1 {
+			fmt.Println("❌ requires at two arguments: JOB_NAME VIEW_NAME")
+			os.Exit(1)
+		}
+		err := jenkinsMod.AddJobToView(args[0], args[1])
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		fmt.Printf("Created job %s in view %s\n", args[0], args[1])
+	},
+}
+
 var createFolder = &cobra.Command{
 	Use:   "folder",
 	Short: "create a folder",
@@ -171,4 +188,5 @@ func init() {
 	createCmd.AddCommand(createView)
 	createCmd.AddCommand(createFolder)
 	createCmd.AddCommand(createJobInFolder)
+	createCmd.AddCommand(createJobInView)
 }
