@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
+	"strconv"
 )
 
 // createCmd represents the create command
@@ -31,9 +32,28 @@ var createCmd = &cobra.Command{
 var createNode = &cobra.Command{
 	Use:   "node",
 	Short: "create a node",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("In the TODO list")
-		return nil
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) != 5 {
+			fmt.Println("❌ requires at least five arguments: (NODE_NAME NUMBER_EXECUTORS DESCRIPTION REMOTEFS LABEL)")
+			os.Exit(1)
+		}
+		executors, err := strconv.Atoi(args[1])
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		_, err = jenkinsMod.Instance.CreateNode(
+			jenkinsMod.Context,
+			args[0],
+			executors,
+			args[2],
+			args[3],
+			args[4])
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
 	},
 }
 
@@ -68,7 +88,8 @@ var createView = &cobra.Command{
 	Short: "create a view",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 2 {
-			return errors.New("❌ requires at least two arguments: viewName viewType (LIST_VIEW, NESTED_VIEW, MY_VIEW, DASHBOARD_VIEW, PIPELINE_VIEW")
+			fmt.Println("❌ requires at least two arguments: viewName viewType (LIST_VIEW, NESTED_VIEW, MY_VIEW, DASHBOARD_VIEW, PIPELINE_VIEW")
+			os.Exit(1)
 		}
 
 		fmt.Printf("⏳ Creating view %s...\n", args[0])

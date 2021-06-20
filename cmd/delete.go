@@ -31,7 +31,7 @@ var deleteCmd = &cobra.Command{
 var deleteNode = &cobra.Command{
 	Use:   "node",
 	Short: "delete a node",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("⏳ Deleting the node %s...\n", args[0])
 		_, err := jenkinsMod.Instance.DeleteNode(jenkinsMod.Context, args[0])
 		if err != nil {
