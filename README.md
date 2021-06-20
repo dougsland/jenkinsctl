@@ -1,3 +1,5 @@
+jenkinsctl is a jenkins CLI based on gojenkins.
+
 :one: Generate a token for the username that will manage the jenkins.
 
 - Log in to Jenkins.
