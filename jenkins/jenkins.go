@@ -388,7 +388,7 @@ func (j *Jenkins) AddJobToView(viewName string, jobName string) error {
 	view, _ := j.Instance.GetView(j.Context, "test_list_view")
 	_, err := view.AddJob(j.Context, jobName)
 	if err != nil {
-		return errors.New("❌ unable to add job to view")
+		return err
 	}
 
 	return nil
