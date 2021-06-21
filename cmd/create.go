@@ -34,7 +34,7 @@ var createJobInView = &cobra.Command{
 	Use:   "jobinview",
 	Short: "create a job in view",
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) != 1 {
+		if len(args) != 2 {
 			fmt.Println("❌ requires at two arguments: JOB_NAME VIEW_NAME")
 			os.Exit(1)
 		}
