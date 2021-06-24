@@ -24,6 +24,8 @@ $ popd
 :three: Build the jenkinsctl
 
 ```
+$ cd $GOPATH (The same as: go env | grep PATH)
+$ cd src/github.com/
 $ git clone https://github.com/dougsland/jenkinsctl.git
 $ cd jenkinsctl
 $ make
