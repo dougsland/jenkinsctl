@@ -34,3 +34,8 @@ jobs:
         cd go/src/github.com/dougsland/jenkinsctl
         env GOOS=linux GOARCH=amd64 go build -v -o jenkinsctl_linux_amd64 -ldflags="-s -w -X main.version=latest" jenkinsctl.go
 
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v2
+      with:
+          name: code-coverage-report
+          path: go/bin/jenkinsctl_linux_amd64
