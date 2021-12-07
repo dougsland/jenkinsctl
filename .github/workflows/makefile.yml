@@ -16,3 +16,10 @@ jobs:
       
     - name: Build
       run: make
+      
+      
+    - name: Debug
+      run: |
+        pwd
+        echo ${GOPATH}
+        echo ${GOROOT}
