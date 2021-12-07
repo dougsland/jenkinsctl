@@ -12,9 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Go 1.12
+    - name: Check out code to a GOPATH compatible directory
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+        path: go/src/github.com/dougsland/jenkinsctl
+        
+    - name: Set up Go 1.16
       uses: actions/setup-go@v1
       with:
         go-version: 1.16
@@ -24,3 +28,7 @@ jobs:
         pwd
         echo ${GOPATH}
         echo ${GOROOT}
+
+    - name: Make
+      run: |
+        make
